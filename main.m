@@ -20,7 +20,11 @@ static void _callback(CGPDFScannerRef scanner, void* info) {
   
   const char* subtype;
   assert(CGPDFDictionaryGetName(objectDictionary, "Subtype", &subtype));
-  assert(strcmp(subtype, "Image") == 0);
+  //assert(strcmp(subtype, "Image") == 0);
+    if(strcmp(subtype, "Image") != 0){
+        printf("WARNING: Ignoring non-image : \"%s\" detected instead image\n", subtype);
+        return;
+    }
   
   CGPDFDataFormat format;
   CFDataRef data = CGPDFStreamCopyData(objectStream, &format);
